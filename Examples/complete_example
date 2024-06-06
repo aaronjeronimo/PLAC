@@ -1,0 +1,111 @@
+// Ejemplo de declaración de clase con variables y métodos
+public class ExampleClass {
+    // Declaración de variables
+    int x;
+    double y;
+    String name;
+
+    // Método para asignar valor a x
+    public void setX(int value) {
+        x = value;
+    }
+
+    // Método para obtener el valor de y
+    public double getY() {
+        return y;
+    }
+
+    // Método para imprimir el nombre
+    public void printName() {
+        System.out.println(name);
+    }
+}
+
+// Clase con ejemplos de estructuras de control
+class ControlFlowExample {
+    int a;
+    boolean b;
+
+    // Método que utiliza if-else
+    public void checkValue(int value) {
+        if (value > 10) {
+            System.out.println("Value is greater than 10");
+        } else if (value == 10) {
+            System.out.println("Value is exactly 10");
+        } else {
+            System.out.println("Value is less than 10");
+        }
+    }
+
+    // Método que utiliza for y while
+    public void loopExample() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println(i);
+        }
+
+        int j = 0;
+        while (j < 5) {
+            System.out.println(j);
+            j++;
+        }
+    }
+}
+
+// Clase con ejemplo de switch-case
+class SwitchExample {
+    int day;
+
+    public void printDayOfWeek() {
+        switch (day) {
+            case 1:
+                System.out.println("Monday");
+                break;
+            case 2:
+                System.out.println("Tuesday");
+                break;
+            case 3:
+                System.out.println("Wednesday");
+                break;
+            case 4:
+                System.out.println("Thursday");
+                break;
+            case 5:
+                System.out.println("Friday");
+                break;
+            case 6:
+                System.out.println("Saturday");
+                break;
+            case 7:
+                System.out.println("Sunday");
+                break;
+            default:
+                System.out.println("Invalid day");
+                break;
+        }
+    }
+}
+
+// Clase con manipulación de variables y métodos
+class VariableMethodExample {
+    int num;
+    char letter;
+    boolean isTrue;
+    double decimalValue;
+    String text;
+
+    public void setValues(int num, char letter, boolean isTrue, double decimalValue, String text) {
+        this.num = num;
+        this.letter = letter;
+        this.isTrue = isTrue;
+        this.decimalValue = decimalValue;
+        this.text = text;
+    }
+
+    public void printValues() {
+        System.out.println("Num: " + num);
+        System.out.println("Letter: " + letter);
+        System.out.println("Boolean: " + isTrue);
+        System.out.println("Double: " + decimalValue);
+        System.out.println("Text: " + text);
+    }
+}
