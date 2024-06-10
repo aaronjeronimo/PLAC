@@ -4,17 +4,19 @@
 
 %}
 
+%option yylineno
+
+underscore     "_"
 digit          [0-9]
 letter         [a-zA-Z]
 cap_letter     [A-Z]
-identifier     {letter}({letter}|{digit})*
-cap_identifier {cap_letter}({letter}|{digit})*
+identifier     ({letter}|{underscore})({letter}|{digit}|{underscore})*
+cap_identifier {cap_letter}({letter}|{digit}|{underscore})*
 string_lit     \"[^\"]*\"
 char_lit       \'[^\']\'
-comment        "//".*|"/*"(.|\n)*?"*/"
+comment        "//".*|"/*"(.|\n)*"*/"
 
 %%
-\n           	 { yylineno++; } // Incrementa el número de línea en cada nueva línea
 "public"         { return PUBLIC; }
 "class"          { return CLASS; }
 "private"        { return PRIVATE; }
@@ -28,8 +30,7 @@ comment        "//".*|"/*"(.|\n)*?"*/"
 "while"          { return WHILE; }
 "do"             { return DO; }
 "new"            { return NEW; }
-"print"          { return PRINT; }
-"out"            { return OUT; }
+"out.print"      { return PRINT; }
 "break"          { return BREAK; }
 
 "int"		 { return INT; }
@@ -48,31 +49,32 @@ comment        "//".*|"/*"(.|\n)*?"*/"
 {char_lit}       { yylval.sval = strdup(yytext); return CHAR_LITERAL; }
 {digit}+         { yylval.ival = atoi(yytext); return NUMBER; }
 
-{comment}        { /* ignore comments */ yylineno++; }
+{comment}        { /* ignore comments */ }
 
-"+"              { return '+'; }
-"-"              { return '-'; }
-"*"              { return '*'; }
-"/"              { return '/'; }
-"="              { return '='; }
+"+"              { return PLUS; }
+"-"              { return MINUS; }
+"*"              { return STAR; }
+"/"              { return SLASH; }
+"="              { return ASSIGN; }
 "=="             { return EQ; }
 "!="             { return NE; }
-">"              { return '>'; }
-"<"              { return '<'; }
+">"              { return GREATER; }
+"<"              { return LESS; }
 "&&"             { return AND; }
 "||"             { return OR; }
 "{"              { return LBRACE; }
 "}"              { return RBRACE; }
 "("              { return LPAREN; }
 ")"              { return RPAREN; }
-";"              { return ';'; yylineno++; }
-"."              { return '.'; }
-","              { return ','; }
+";"              { return SEMICOLON; }
+":"              { return COLON; }
+"."              { return POINT; }
+","              { return COMMA; }
 
 [ \t\n]+         { /* ignore whitespace */ }
 
 
-.                { printf("Unexpected character: %s\n", yytext); }
+.               { printf("Unexpected character: %s\n", yytext); }
 
 %%
 

@@ -1,9 +1,9 @@
 public class MyClass {
-    public int myVar;
-    public void myMethod ( int hola ) {
-        int x = 10;
+    public int myVar ;
+    public void myMethod (int x) {
+        myVar = 10;
         if (x > 5) {
-            print("Hello, World!");
+            out.print("Hello, World!");
         }
     }
 }

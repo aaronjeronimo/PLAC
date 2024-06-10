@@ -1,111 +1,105 @@
-// Ejemplo de declaración de clase con variables y métodos
-public class ExampleClass {
-    // Declaración de variables
-    int x;
-    double y;
-    String name;
+/* Big command 	*/
 
-    // Método para asignar valor a x
+// Method and class declaration
+public class ExampleClass {
+
+    // Assign
     public void setX(int value) {
         x = value;
     }
 
-    // Método para obtener el valor de y
+    // Return
     public double getY() {
         return y;
     }
 
-    // Método para imprimir el nombre
+    // Printing
     public void printName() {
-        System.out.println(name);
+        out.print("name", name);
     }
 }
 
-// Clase con ejemplos de estructuras de control
-class ControlFlowExample {
+// If and Loops
+public class ControlFlowExample {
     int a;
     boolean b;
 
-    // Método que utiliza if-else
-    public void checkValue(int value) {
+    private void checkValue(int value) {
         if (value > 10) {
-            System.out.println("Value is greater than 10");
+            out.print("Value is greater than 10");
         } else if (value == 10) {
-            System.out.println("Value is exactly 10");
+            out.print("Value is exactly 10");
         } else {
-            System.out.println("Value is less than 10");
+            out.print("Value is less than 10");
         }
     }
 
-    // Método que utiliza for y while
     public void loopExample() {
-        for (int i = 0; i < 5; i++) {
-            System.out.println(i);
+        for (int i = 0; i < 5; i = i+5) {
+            out.print("valor");
         }
 
-        int j = 0;
-        while (j < 5) {
-            System.out.println(j);
-            j++;
-        }
+	// int j;
+        // int j = 0;
+        do {
+            out.print("valor");
+            j = j+1;
+        } while (j < 5);
     }
 }
 
-// Clase con ejemplo de switch-case
-class SwitchExample {
+// Switch
+public class SwitchExample {
     int day;
 
     public void printDayOfWeek() {
         switch (day) {
             case 1:
-                System.out.println("Monday");
                 break;
             case 2:
-                System.out.println("Tuesday");
+                out.print("Tuesday");
                 break;
             case 3:
-                System.out.println("Wednesday");
                 break;
             case 4:
-                System.out.println("Thursday");
                 break;
             case 5:
-                System.out.println("Friday");
                 break;
             case 6:
-                System.out.println("Saturday");
                 break;
             case 7:
-                System.out.println("Sunday");
                 break;
             default:
-                System.out.println("Invalid day");
-                break;
         }
     }
 }
 
-// Clase con manipulación de variables y métodos
-class VariableMethodExample {
-    int num;
-    char letter;
-    boolean isTrue;
-    double decimalValue;
-    String text;
+// Variables and methods
+public class VariableMethodExample {
+    int _num;
+    char _letter;
+    boolean _isTrue;
+    double _decimalValue;
+    String _text;
+    char _extra;
+    SwitchExample _test = new SwitchExample();
 
     public void setValues(int num, char letter, boolean isTrue, double decimalValue, String text) {
-        this.num = num;
-        this.letter = letter;
-        this.isTrue = isTrue;
-        this.decimalValue = decimalValue;
-        this.text = text;
+        _num = num;
+        _letter = letter;
+        _isTrue = isTrue;
+        _decimalValue = decimalValue;
+        _text = text;
+        _test = _test.var;
     }
 
     public void printValues() {
-        System.out.println("Num: " + num);
-        System.out.println("Letter: " + letter);
-        System.out.println("Boolean: " + isTrue);
-        System.out.println("Double: " + decimalValue);
-        System.out.println("Text: " + text);
+        out.print("Num: ", num);
+        out.print("Letter: ", letter);
+        out.print("Boolean: ", isTrue);
+        out.print("Double: ", decimalValue);
+        out.print("Text: ", text);
     }
 }
+
+

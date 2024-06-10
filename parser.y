@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void yyerror(const char *s);
+int yyerror(const char *s);
 extern int yylex(void);
 extern FILE *yyin;
 extern int yylineno; // Declaración para obtener el número de línea
@@ -15,15 +15,11 @@ extern char *yytext; // Declaración para obtener el texto actual
     int ival;
 }
 
-%token CLASS PUBLIC PRIVATE RETURN IF ELSE SWITCH CASE DEFAULT
-%token FOR WHILE DO NEW PRINT OUT BREAK INT DOUBLE CHAR BOOLEAN STRING VOID
-%token IDENTIFIER CAP_IDENTIFIER STRING_LITERAL CHAR_LITERAL
-%token NUMBER BOOLEAN_LITERAL
-%token EQ NE AND OR LBRACE RBRACE LPAREN RPAREN
+%token CLASS PUBLIC PRIVATE RETURN IF ELSE SWITCH CASE DEFAULT FOR WHILE DO NEW PRINT BREAK INT DOUBLE CHAR BOOLEAN STRING VOID
+%token IDENTIFIER CAP_IDENTIFIER STRING_LITERAL CHAR_LITERAL NUMBER BOOLEAN_LITERAL EQ NE AND OR PLUS MINUS STAR SLASH ASSIGN
+%token GREATER LESS LBRACE RBRACE LPAREN RPAREN SEMICOLON COLON POINT COMMA
 
-%type class_declaration class_body method_declaration parameter_list parameter variable_declaration
-%type statement assignment_statement expression literal compound_expression object_creation method_call argument_list
-%type condition control_statement loop_statement print_statement return_statement break_statement
+%start program
 
 %%
 program:
@@ -36,21 +32,36 @@ class_declaration_list:
     ;
 
 class_declaration:
-    PUBLIC CLASS CAP_IDENTIFIER LBRACE class_body RBRACE
-    ;
-
-class_body:
-    variable_declaration_list method_declaration_list
+    PUBLIC CLASS CAP_IDENTIFIER LBRACE variable_declaration_list RBRACE
     ;
 
 variable_declaration_list:
-    /* empty */
-    | variable_declaration_list variable_declaration
+    variable_declaration variable_declaration_list
+    | method_declaration_list
+    ;
+
+variable_declaration:
+    data_type IDENTIFIER more_variables SEMICOLON
+    | data_type IDENTIFIER ASSIGN expression more_variables_assing SEMICOLON
+    | modifier data_type IDENTIFIER more_variables SEMICOLON
+    | modifier data_type IDENTIFIER ASSIGN expression more_variables_assing SEMICOLON
+    | CAP_IDENTIFIER IDENTIFIER ASSIGN NEW CAP_IDENTIFIER LPAREN RPAREN SEMICOLON
+    ;
+
+more_variables:
+    /* empty /*
+    | COMMA IDENTIFIER
+    | COMMA IDENTIFIER more_variables
+    ;
+more_variables_assing:
+    /* empty /*
+    | COMMA IDENTIFIER ASSIGN expression
+    | COMMA IDENTIFIER ASSIGN expression more_variables_assing
     ;
 
 method_declaration_list:
     /* empty */
-    | method_declaration_list method_declaration
+    | method_declaration method_declaration_list
     ;
 
 method_declaration:
@@ -61,16 +72,11 @@ method_declaration:
 parameter_list:
     /* empty */
     | parameter
-    | parameter_list ',' parameter
+    | parameter_list COMMA parameter
     ;
 
 parameter:
     data_type IDENTIFIER
-    ;
-
-variable_declaration:
-    modifier data_type IDENTIFIER ';'
-    | data_type IDENTIFIER ';'
     ;
 
 modifier:
@@ -103,17 +109,18 @@ statement:
     | print_statement
     | return_statement
     | break_statement
+    | using_method
     ;
 
 assignment_statement:
-    IDENTIFIER '=' expression ';'
+    IDENTIFIER ASSIGN expression SEMICOLON
     ;
 
 expression:
     literal
     | IDENTIFIER
     | method_call
-    | object_creation
+    | using_method
     | compound_expression
     ;
 
@@ -125,34 +132,34 @@ literal:
     ;
 
 compound_expression:
-    expression '+' expression
-    | expression '-' expression
-    | expression '*' expression
-    | expression '/' expression
+    expression PLUS expression
+    | expression MINUS expression
+    | expression STAR expression
+    | expression SLASH expression
     ;
 
-object_creation:
-    NEW IDENTIFIER LPAREN RPAREN
+using_method:
+    IDENTIFIER POINT IDENTIFIER
     ;
 
 method_call:
-    IDENTIFIER '.' IDENTIFIER LPAREN argument_list RPAREN
-    | IDENTIFIER '.' IDENTIFIER LPAREN RPAREN
+    IDENTIFIER POINT IDENTIFIER LPAREN argument_list RPAREN
+    | IDENTIFIER POINT IDENTIFIER LPAREN RPAREN
     ;
 
 argument_list:
     expression
-    | argument_list ',' expression
+    | argument_list COMMA expression
     ;
 
 loop_statement:
-    DO LBRACE statement_list RBRACE WHILE LPAREN condition RPAREN ';'
-    | FOR LPAREN data_type IDENTIFIER '=' expression ';' condition ';' assignment_statement RPAREN LBRACE statement_list RBRACE
+    DO LBRACE statement_list RBRACE WHILE LPAREN condition RPAREN SEMICOLON
+    | FOR LPAREN data_type IDENTIFIER ASSIGN expression SEMICOLON condition SEMICOLON IDENTIFIER ASSIGN compound_expression RPAREN LBRACE statement_list RBRACE
     ;
 
 condition:
-    expression '>' expression
-    | expression '<' expression
+    expression GREATER expression
+    | expression LESS expression
     | expression EQ expression
     | expression NE expression
     | expression AND expression
@@ -180,43 +187,61 @@ case_clause_list:
     ;
 
 case_clause:
-    CASE expression ':' statement_list
+    CASE expression COLON statement_list
     ;
 
 default_clause:
     /* empty */
-    | DEFAULT ':' statement_list
+    | DEFAULT COLON statement_list
     ;
 
 print_statement:
-    OUT '.' PRINT LPAREN STRING_LITERAL RPAREN
-    | OUT '.' PRINT LPAREN STRING_LITERAL ',' IDENTIFIER RPAREN
+    PRINT LPAREN STRING_LITERAL RPAREN SEMICOLON
+    | PRINT LPAREN STRING_LITERAL COMMA IDENTIFIER RPAREN SEMICOLON
     ;
 
 return_statement:
-    RETURN expression ';'
+    RETURN expression SEMICOLON
     ;
 
 break_statement:
-    BREAK ';'
+    BREAK SEMICOLON
     ;
 
 %%
 
-void yyerror(const char *s) {
-    fprintf(stderr, "Error at line %d: %s at '%s'\n", yylineno, s, yytext);
+int yyerror(const char *s) {
+    fprintf(stderr, "%s at line %d at '%s'\n", s, yylineno, yytext);
+    exit(1);
 }
 
 int main(int argc, char **argv) {
-    yylineno = 1; // Initialize line number
+    
     if (argc > 1) {
         FILE *file = fopen(argv[1], "r");
         if (!file) {
             fprintf(stderr, "Could not open file %s\n", argv[1]);
             return 1;
         }
-        yyin = file;
+
+        int c;
+        while ((c = fgetc(file)) != EOF) {
+            putchar(c);
+        }
+        printf("\n\n");
+
+        fclose(file);
+
+        yyin = fopen(argv[1], "r"); // Establecer yyin para que Flex lea desde el archivo
     }
-    return yyparse();
+    else {
+        fprintf(stderr, "The file that should be checked should be the first argument.\n");
+        return 1;
+    }
+
+    yyparse();
+
+    printf("The code is completely correct!\n");
+    return 0;
 }
 

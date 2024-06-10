@@ -68,28 +68,38 @@ extern int yydebug;
     DO = 269,                      /* DO  */
     NEW = 270,                     /* NEW  */
     PRINT = 271,                   /* PRINT  */
-    OUT = 272,                     /* OUT  */
-    BREAK = 273,                   /* BREAK  */
-    INT = 274,                     /* INT  */
-    DOUBLE = 275,                  /* DOUBLE  */
-    CHAR = 276,                    /* CHAR  */
-    BOOLEAN = 277,                 /* BOOLEAN  */
-    STRING = 278,                  /* STRING  */
-    VOID = 279,                    /* VOID  */
-    IDENTIFIER = 280,              /* IDENTIFIER  */
-    CAP_IDENTIFIER = 281,          /* CAP_IDENTIFIER  */
-    STRING_LITERAL = 282,          /* STRING_LITERAL  */
-    CHAR_LITERAL = 283,            /* CHAR_LITERAL  */
-    NUMBER = 284,                  /* NUMBER  */
-    BOOLEAN_LITERAL = 285,         /* BOOLEAN_LITERAL  */
-    EQ = 286,                      /* EQ  */
-    NE = 287,                      /* NE  */
-    AND = 288,                     /* AND  */
-    OR = 289,                      /* OR  */
-    LBRACE = 290,                  /* LBRACE  */
-    RBRACE = 291,                  /* RBRACE  */
-    LPAREN = 292,                  /* LPAREN  */
-    RPAREN = 293                   /* RPAREN  */
+    BREAK = 272,                   /* BREAK  */
+    INT = 273,                     /* INT  */
+    DOUBLE = 274,                  /* DOUBLE  */
+    CHAR = 275,                    /* CHAR  */
+    BOOLEAN = 276,                 /* BOOLEAN  */
+    STRING = 277,                  /* STRING  */
+    VOID = 278,                    /* VOID  */
+    IDENTIFIER = 279,              /* IDENTIFIER  */
+    CAP_IDENTIFIER = 280,          /* CAP_IDENTIFIER  */
+    STRING_LITERAL = 281,          /* STRING_LITERAL  */
+    CHAR_LITERAL = 282,            /* CHAR_LITERAL  */
+    NUMBER = 283,                  /* NUMBER  */
+    BOOLEAN_LITERAL = 284,         /* BOOLEAN_LITERAL  */
+    EQ = 285,                      /* EQ  */
+    NE = 286,                      /* NE  */
+    AND = 287,                     /* AND  */
+    OR = 288,                      /* OR  */
+    PLUS = 289,                    /* PLUS  */
+    MINUS = 290,                   /* MINUS  */
+    STAR = 291,                    /* STAR  */
+    SLASH = 292,                   /* SLASH  */
+    ASSIGN = 293,                  /* ASSIGN  */
+    GREATER = 294,                 /* GREATER  */
+    LESS = 295,                    /* LESS  */
+    LBRACE = 296,                  /* LBRACE  */
+    RBRACE = 297,                  /* RBRACE  */
+    LPAREN = 298,                  /* LPAREN  */
+    RPAREN = 299,                  /* RPAREN  */
+    SEMICOLON = 300,               /* SEMICOLON  */
+    COLON = 301,                   /* COLON  */
+    POINT = 302,                   /* POINT  */
+    COMMA = 303                    /* COMMA  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -103,7 +113,7 @@ union YYSTYPE
     char* sval;
     int ival;
 
-#line 107 "parser.tab.h"
+#line 117 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
