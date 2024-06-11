@@ -5,7 +5,7 @@ public class ExampleClass {
 
     // Assign
     public void setX(int value) {
-        x = value;
+        x = 5.99d;
     }
 
     // Return

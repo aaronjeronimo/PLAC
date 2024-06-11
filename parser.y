@@ -13,11 +13,12 @@ extern char *yytext; // Declaración para obtener el texto actual
 %union {
     char* sval;
     int ival;
+    double dval;
 }
 
 %token CLASS PUBLIC PRIVATE RETURN IF ELSE SWITCH CASE DEFAULT FOR WHILE DO NEW PRINT BREAK INT DOUBLE CHAR BOOLEAN STRING VOID
-%token IDENTIFIER CAP_IDENTIFIER STRING_LITERAL CHAR_LITERAL NUMBER BOOLEAN_LITERAL EQ NE AND OR PLUS MINUS STAR SLASH ASSIGN
-%token GREATER LESS LBRACE RBRACE LPAREN RPAREN SEMICOLON COLON POINT COMMA
+%token IDENTIFIER CAP_IDENTIFIER STRING_LITERAL CHAR_LITERAL DOUBLE_LITERAL NUMBER BOOLEAN_LITERAL EQ NE AND OR PLUS MINUS STAR
+%token SLASH ASSIGN GREATER LESS LBRACE RBRACE LPAREN RPAREN SEMICOLON COLON POINT COMMA
 
 %start program
 
@@ -49,13 +50,11 @@ variable_declaration:
     ;
 
 more_variables:
-    /* empty /*
-    | COMMA IDENTIFIER
+    /* empty */
     | COMMA IDENTIFIER more_variables
     ;
 more_variables_assing:
-    /* empty /*
-    | COMMA IDENTIFIER ASSIGN expression
+    /* empty */
     | COMMA IDENTIFIER ASSIGN expression more_variables_assing
     ;
 
@@ -129,6 +128,7 @@ literal:
     | CHAR_LITERAL
     | STRING_LITERAL
     | BOOLEAN_LITERAL
+    | DOUBLE_LITERAL
     ;
 
 compound_expression:
@@ -136,6 +136,10 @@ compound_expression:
     | expression MINUS expression
     | expression STAR expression
     | expression SLASH expression
+    | '(' expression PLUS expression ')'
+    | '(' expression MINUS expression ')'
+    | '(' expression STAR expression ')'
+    | '(' expression SLASH expression ')'
     ;
 
 using_method:

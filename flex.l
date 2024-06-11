@@ -14,6 +14,8 @@ identifier     ({letter}|{underscore})({letter}|{digit}|{underscore})*
 cap_identifier {cap_letter}({letter}|{digit}|{underscore})*
 string_lit     \"[^\"]*\"
 char_lit       \'[^\']\'
+double_lit     [1-9]{digit}*\.{digit}+d
+int_lit        0|[1-9]{digit}*
 comment        "//".*|"/*"(.|\n)*"*/"
 
 %%
@@ -47,7 +49,8 @@ comment        "//".*|"/*"(.|\n)*"*/"
 {identifier}     { yylval.sval = strdup(yytext); return IDENTIFIER; }
 {string_lit}     { yylval.sval = strdup(yytext); return STRING_LITERAL; }
 {char_lit}       { yylval.sval = strdup(yytext); return CHAR_LITERAL; }
-{digit}+         { yylval.ival = atoi(yytext); return NUMBER; }
+{double_lit}     { yylval.dval = atof(yytext); return DOUBLE_LITERAL; }
+{int_lit}         { yylval.ival = atoi(yytext); return NUMBER; }
 
 {comment}        { /* ignore comments */ }
 
