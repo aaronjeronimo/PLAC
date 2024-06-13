@@ -102,9 +102,24 @@ statement:
     | control_statement
     | print_statement
     | return_statement
+    | method_call SEMICOLON
+    ;
+
+statement_list_for_loop:
+    /* empty */
+    | statement_for_loop statement_list_for_loop
+    ;
+
+statement_for_loop:
+    assignment_statement
+    | loop_statement
+    | control_statement_for_loop
+    | print_statement
+    | return_statement
     | break_statement
     | method_call SEMICOLON
     ;
+
 
 assignment_statement:
     IDENTIFIER ASSIGN expression SEMICOLON
@@ -154,8 +169,8 @@ argument_list:
     ;
 
 loop_statement:
-    DO LBRACE statement_list RBRACE WHILE LPAREN condition RPAREN SEMICOLON
-    | FOR LPAREN data_type IDENTIFIER ASSIGN expression SEMICOLON condition SEMICOLON IDENTIFIER ASSIGN compound_expression RPAREN LBRACE statement_list RBRACE
+    DO LBRACE statement_list_for_loop RBRACE WHILE LPAREN condition RPAREN SEMICOLON
+    | FOR LPAREN data_type IDENTIFIER ASSIGN expression SEMICOLON condition SEMICOLON IDENTIFIER ASSIGN compound_expression RPAREN LBRACE statement_list_for_loop RBRACE
     ;
 
 condition:
@@ -199,6 +214,34 @@ case_clause:
 default_clause:
     /* empty */
     | DEFAULT COLON statement_list
+    
+control_statement_for_loop:
+    IF LPAREN condition RPAREN LBRACE statement_list_for_loop RBRACE else_if_list_for_loop else_clause_for_loop
+    | SWITCH LPAREN expression RPAREN LBRACE case_clause_list_for_loop default_clause_for_loop RBRACE
+    ;
+
+else_if_list_for_loop:
+    /* empty */
+    | else_if_list_for_loop ELSE IF LPAREN condition RPAREN LBRACE statement_list RBRACE
+    ;
+
+else_clause_for_loop:
+    /* empty */
+    | ELSE LBRACE statement_list_for_loop RBRACE
+    ;
+
+case_clause_list_for_loop:
+    /* empty */
+    | case_clause case_clause_list_for_loop
+    ;
+
+case_clause_for_loop:
+    CASE expression COLON statement_list_for_loop
+    ;
+
+default_clause_for_loop:
+    /* empty */
+    | DEFAULT COLON statement_list_for_loop
     ;
 
 print_statement:
