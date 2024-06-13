@@ -2,9 +2,10 @@ public class MyClass {
     public String myVar ;
     public void myMethod (int x) {
         myVar = "Hola''\"''     ''"; 
-        public int data = 0;
+        // private int data = 0;
+        data = 0;
         if (x > 5) {
-            out.print("Hello, World!");
+            out.print("Hello, World!", myVar, data);
         }
     }
 }
