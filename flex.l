@@ -12,8 +12,8 @@ letter         [a-zA-Z]
 cap_letter     [A-Z]
 identifier     ({letter}|{underscore})({letter}|{digit}|{underscore})*
 cap_identifier {cap_letter}({letter}|{digit}|{underscore})*
-string_lit     \"[^\"]*\"
-char_lit       \'[^\']\'
+string_lit     \"([^\"]|\\[ntbrf\'\"\\])*\"
+char_lit       \'([^\'\"]|\\[ntbrf\'\"\\])\'
 double_lit     [1-9]{digit}*\.{digit}+d
 int_lit        0|[1-9]{digit}*
 comment        "//".*|"/*"(.|\n)*"*/"

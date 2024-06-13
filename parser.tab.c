@@ -1544,9 +1544,13 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    yyparse();
-
-    printf("The code is completely correct!\n");
+    if (yyparse() == 0) 
+        printf("The code is completely correct!\n");
+    else {
+        printf("Parsing failed with errors.\n");
+        return 1;
+    }
+    
     return 0;
 }
 

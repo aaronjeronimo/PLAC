@@ -1,0 +1,10 @@
+public class MyClass {
+    public String myVar ;
+    public void myMethod (int x) {
+        myVar = "Hola''\"''     ''"; 
+        public int data = 0;
+        if (x > 5) {
+            out.print("Hello, World!");
+        }
+    }
+}
