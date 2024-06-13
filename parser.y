@@ -64,20 +64,17 @@ method_declaration_list:
     ;
 
 method_declaration:
-    modifier VOID IDENTIFIER LPAREN parameter_option RPAREN LBRACE variable_declaration_list statement_list RBRACE
-    | VOID IDENTIFIER LPAREN parameter_option RPAREN LBRACE variable_declaration_list statement_list RBRACE
-    modifier data_type IDENTIFIER LPAREN parameter_option RPAREN LBRACE variable_declaration_list statement_list RBRACE
-    | data_type IDENTIFIER LPAREN parameter_option RPAREN LBRACE variable_declaration_list statement_list RBRACE
+    modifier return_type IDENTIFIER LPAREN parameter_list RPAREN LBRACE variable_declaration_list statement_list RBRACE
+    | return_type IDENTIFIER LPAREN parameter_list RPAREN LBRACE variable_declaration_list statement_list RBRACE
     ;
-
-parameter_option:
-    /* empty */
-    | parameter_list
-    ;
-
 parameter_list:
+    /* empty */
+    | parameter
+    | parameter_list COMMA parameter
+    ;
+
+parameter:
     data_type IDENTIFIER
-    | data_type IDENTIFIER COMMA parameter_list
     ;
 
 modifier:

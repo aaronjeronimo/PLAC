@@ -1,7 +1,7 @@
 public class MyClass {
     public String myVar ;
     
-    public int myMethod () {
-
+    public void myMethod (int i, int j) {
+        out.print("Text: ");
     }
 }
