@@ -42,9 +42,7 @@ variable_declaration_list:
     ;
 
 variable_declaration:
-    data_type IDENTIFIER variable_initialization more_variables SEMICOLON
-    | modifier data_type IDENTIFIER variable_initialization more_variables SEMICOLON
-    | CAP_IDENTIFIER IDENTIFIER ASSIGN NEW CAP_IDENTIFIER LPAREN RPAREN SEMICOLON
+     modifier data_type IDENTIFIER variable_initialization more_variables SEMICOLON
     | modifier CAP_IDENTIFIER IDENTIFIER ASSIGN NEW CAP_IDENTIFIER LPAREN RPAREN SEMICOLON
     ;
 
@@ -64,9 +62,10 @@ method_declaration_list:
     ;
 
 method_declaration:
-    modifier return_type IDENTIFIER LPAREN parameter_list RPAREN LBRACE variable_declaration_list statement_list RBRACE
-    | return_type IDENTIFIER LPAREN parameter_list RPAREN LBRACE variable_declaration_list statement_list RBRACE
+    modifier data_type IDENTIFIER LPAREN parameter_list RPAREN LBRACE variable_declaration_list statement_list RBRACE
+    | modifier VOID IDENTIFIER LPAREN parameter_list RPAREN LBRACE variable_declaration_list statement_list RBRACE
     ;
+
 parameter_list:
     /* empty */
     | parameter
@@ -78,14 +77,11 @@ parameter:
     ;
 
 modifier:
-    PUBLIC
+    /* empty */
+    | PUBLIC
     | PRIVATE
     ;
 
-return_type:
-    VOID
-    | data_type
-    ;
 
 data_type:
     INT
@@ -120,6 +116,7 @@ expression:
     | method_call
     | using_attribute
     | compound_expression
+
     ;
 
 literal:
@@ -131,14 +128,15 @@ literal:
     ;
 
 compound_expression:
-    expression PLUS expression
-    | expression MINUS expression
-    | expression STAR expression
-    | expression SLASH expression
-    | LPAREN expression PLUS expression RPAREN
-    | LPAREN expression MINUS expression RPAREN
-    | LPAREN expression STAR expression RPAREN
-    | LPAREN expression SLASH expression RPAREN
+    expression aritmetic_operator expression
+    | LPAREN expression aritmetic_operator expression RPAREN
+    ;
+
+aritmetic_operator:
+    PLUS
+    | MINUS
+    | STAR
+    | SLASH
     ;
 
 using_attribute:
@@ -161,13 +159,18 @@ loop_statement:
     ;
 
 condition:
-    expression GREATER expression
-    | expression LESS expression
-    | expression EQ expression
-    | expression NE expression
-    | expression AND expression
-    | expression OR expression
+    expression logic_operator expression
     ;
+
+logic_operator:
+    GREATER 
+    | LESS 
+    | EQ 
+    | NE 
+    | AND 
+    | OR 
+    ;
+
 
 control_statement:
     IF LPAREN condition RPAREN LBRACE statement_list RBRACE else_if_list else_clause
