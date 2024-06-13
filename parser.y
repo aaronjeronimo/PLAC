@@ -108,7 +108,7 @@ statement:
     | print_statement
     | return_statement
     | break_statement
-    | using_method
+    | method_call
     ;
 
 assignment_statement:
@@ -119,7 +119,7 @@ expression:
     literal
     | IDENTIFIER
     | method_call
-    | using_method
+    | using_attribute
     | compound_expression
     ;
 
@@ -142,7 +142,7 @@ compound_expression:
     | LPAREN expression SLASH expression RPAREN
     ;
 
-using_method:
+using_attribute:
     IDENTIFIER POINT IDENTIFIER
     ;
 
