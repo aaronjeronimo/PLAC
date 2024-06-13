@@ -16,7 +16,7 @@ string_lit     \"([^\"]|\\[ntbrf\'\"\\])*\"
 char_lit       \'([^\'\"]|\\[ntbrf\'\"\\])\'
 double_lit     [1-9]{digit}*\.{digit}+d
 int_lit        0|[1-9]{digit}*
-comment        "//".*|"/*"(.|\n)*"*/"
+comment        "//".*|"/*"([^*]|\*+[^*/])*\*"/"  
 
 %%
 "public"         { return PUBLIC; }

@@ -98,7 +98,8 @@ public class VariableMethodExample {
         out.print("Letter: ", letter);
         out.print("Boolean: ", isTrue);
         out.print("Double: ", decimalValue);
-        out.print("Text: ", text);
+        out.print("Text: " /* */, text);
+        // _test.day();
     }
 }
 
