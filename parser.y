@@ -59,6 +59,7 @@ more_variables:
 method_declaration_list:
     /* empty */
     | method_declaration method_declaration_list
+    | class_declaration_list
     ;
 
 method_declaration:

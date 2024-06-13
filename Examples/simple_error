@@ -1,6 +1,15 @@
 public class MyClass {
+    int myVar = 0;
 
     public int myMethod (int i) {
         return 0;
+    }
+
+    public class MyClass {
+        int myVar2 = 0;
+
+        public int myMethod2 (int i) {
+            return 0;
+        }
     }
 }
