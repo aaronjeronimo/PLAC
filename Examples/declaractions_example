@@ -1,0 +1,9 @@
+public class MyClass {
+    public int myVar ;
+    public void myMethod (int x) {
+        myVar = 10.5d;
+        if (x > 5) {
+            out.print("Hello, World!");
+        }
+    }
+}

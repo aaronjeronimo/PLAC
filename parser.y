@@ -29,7 +29,7 @@ program:
 
 class_declaration_list:
     class_declaration
-    | class_declaration_list class_declaration
+    | class_declaration class_declaration_list
     ;
 
 class_declaration:
@@ -98,7 +98,7 @@ data_type:
 
 statement_list:
     /* empty */
-    | statement_list statement
+    | statement statement_list
     ;
 
 statement:
@@ -136,10 +136,10 @@ compound_expression:
     | expression MINUS expression
     | expression STAR expression
     | expression SLASH expression
-    | '(' expression PLUS expression ')'
-    | '(' expression MINUS expression ')'
-    | '(' expression STAR expression ')'
-    | '(' expression SLASH expression ')'
+    | LPAREN expression PLUS expression RPAREN
+    | LPAREN expression MINUS expression RPAREN
+    | LPAREN expression STAR expression RPAREN
+    | LPAREN expression SLASH expression RPAREN
     ;
 
 using_method:
@@ -187,7 +187,7 @@ else_clause:
 
 case_clause_list:
     /* empty */
-    | case_clause_list case_clause
+    | case_clause case_clause_list
     ;
 
 case_clause:
