@@ -42,20 +42,20 @@ variable_declaration_list:
     ;
 
 variable_declaration:
-    data_type IDENTIFIER more_variables SEMICOLON
-    | data_type IDENTIFIER ASSIGN expression more_variables_assing SEMICOLON
-    | modifier data_type IDENTIFIER more_variables SEMICOLON
-    | modifier data_type IDENTIFIER ASSIGN expression more_variables_assing SEMICOLON
+    data_type IDENTIFIER variable_initialization more_variables SEMICOLON
+    | modifier data_type IDENTIFIER variable_initialization more_variables SEMICOLON
     | CAP_IDENTIFIER IDENTIFIER ASSIGN NEW CAP_IDENTIFIER LPAREN RPAREN SEMICOLON
+    | modifier CAP_IDENTIFIER IDENTIFIER ASSIGN NEW CAP_IDENTIFIER LPAREN RPAREN SEMICOLON
+    ;
+
+variable_initialization:
+    /* empty */
+    | ASSIGN expression
     ;
 
 more_variables:
     /* empty */
-    | COMMA IDENTIFIER more_variables
-    ;
-more_variables_assing:
-    /* empty */
-    | COMMA IDENTIFIER ASSIGN expression more_variables_assing
+    | COMMA IDENTIFIER variable_initialization more_variables
     ;
 
 method_declaration_list:

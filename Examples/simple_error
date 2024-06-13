@@ -1,8 +1,8 @@
 public class MyClass {
     public String myVar ;
     public void myMethod (int x) {
-        myVar = "Hola''\"''     ''"; 
-        // private int data = 0;
+        String myVar = ""; 
+        private int data = 0 , data3=100;
         data = 0;
         if (x > 5) {
             out.print("Hello, World!", myVar, data);
