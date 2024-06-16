@@ -36,12 +36,12 @@ class_declaration_list:
     ;
 
 class_declaration:
-    PUBLIC CLASS CAP_IDENTIFIER LBRACE variable_declaration_list RBRACE
+    PUBLIC CLASS CAP_IDENTIFIER LBRACE attribute_declaration_list RBRACE
     | error RBRACE { yyerrok; }
     ;
 
-variable_declaration_list:
-    variable_declaration variable_declaration_list
+attribute_declaration_list:
+    variable_declaration attribute_declaration_list
     | method_declaration_list
     | error SEMICOLON { yyerrok; }
     ;
@@ -80,6 +80,12 @@ parameter_list:
     | parameter
     | parameter_list COMMA parameter
     ;
+
+variable_declaration_list:
+    /* empty */
+    | variable_declaration variable_declaration_list
+    ;
+
 
 parameter:
     data_type IDENTIFIER
@@ -317,18 +323,22 @@ int main(int argc, char **argv) {
         fclose(file);
 
         yyin = fopen(argv[1], "r"); // Establecer yyin para que Flex lea desde el archivo
+        
+        yyparse();
+        
+        if (error_count == 0) 
+            printf("The code is completely correct!\n");
+        else {
+            printf("Parsing failed with %d errors.\n", error_count);
+        }
+
+        fclose(yyin);
     }
     else {
         fprintf(stderr, "The file that should be checked should be the first argument.\n");
         return 1;
     }
 
-    if (yyparse() == 0) 
-        printf("The code is completely correct!\n");
-    else {
-        printf("Parsing failed with %d errors.\n", error_count);
-        return 1;
-    }
     
     return 0;
 }

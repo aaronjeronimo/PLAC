@@ -282,18 +282,23 @@ int main(int argc, char **argv) {
         fclose(file);
 
         yyin = fopen(argv[1], "r"); // Establecer yyin para que Flex lea desde el archivo
+        
+        int ret = yyparse();
+
+        fclose(yyin);
+
+        if (ret == 0) 
+            printf("The code is completely correct!\n");
+        else {
+            printf("Parsing failed with errors.\n");
+            return 1;
+        }
     }
     else {
         fprintf(stderr, "The file that should be checked should be the first argument.\n");
         return 1;
     }
 
-    if (yyparse() == 0) 
-        printf("The code is completely correct!\n");
-    else {
-        printf("Parsing failed with errors.\n");
-        return 1;
-    }
     
     return 0;
 }
