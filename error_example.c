@@ -94,12 +94,14 @@ public class VariableMethodExample {
     }
 
     public void printValues) {
-        out.print("Num: ", num);
+        out.print("Num: ", num)
         out.print("Letter: ", letter);
         out.print("Boolean: ", isTrue);
         out.print("Double: ", decimalValue);
         out.print("Text: ", text);
     }
 }
+
+
 
 
