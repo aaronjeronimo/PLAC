@@ -233,7 +233,7 @@ else_clause_for_loop:
 
 case_clause_list_for_loop:
     /* empty */
-    | case_clause case_clause_list_for_loop
+    | case_clause_for_loop case_clause_list_for_loop
     ;
 
 case_clause_for_loop:
